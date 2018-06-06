@@ -1,0 +1,75 @@
+import model composite_LQ_UFO
+
+generate p p > s1b s1b~
+output lqlq_ccctau
+launch
+ set nevents 100
+ set g1r2x3 0
+ set gnnd3 0
+ set gnnu2 1
+ compute_widths s1b
+ compute_widths nn
+ done
+
+
+generate p p > ts1b ts1b~
+output lqlq_bbbmu
+launch
+ set nevents 100
+ set gt1r3x2 0
+ set gnnu2 0
+ set gnnd3 1
+ compute_widths ts1b
+ compute_widths nn
+ done
+
+generate p p > six six~
+output lq_sixsix_ccctau
+launch
+ set nevents 100
+ set g1r2x3 0
+ set gnnd3 0
+ set gnnu2 1
+ compute_widths six
+ compute_widths s1b
+ compute_widths nn
+ done
+
+generate p p > tsix tsix~
+output lq_sixsix_bbbmu
+launch
+ set nevents 100
+ set gt1r3x2 0
+ set gnnu2 0
+ set gnnd3 1
+ compute_widths tsix
+ compute_widths ts1b
+ compute_widths nn
+ done
+
+
+generate p p > oct  oct
+output lq_octoct
+launch
+ set nevents 100
+ set GtS8r3x2 0
+ set GS8r2x3 0.001
+ set g1r2x3 0
+ set gnnd3 0
+ set gnnu2 1
+ compute_widths 9000080
+ compute_widths s1b
+ compute_widths nn
+ done
+
+launch
+ set nevents 100
+ set GS8r2x3 0
+ set GtS8r3x2 0.001
+ set gt1r3x2 0
+ set gnnu2 0
+ set gnnd3 1
+ compute_widths 9000080
+ compute_widths ts1b
+ compute_widths nn
+ done
