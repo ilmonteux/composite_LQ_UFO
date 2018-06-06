@@ -22,7 +22,7 @@ Finally, the singlet has an effective coupling to quarks and leptons
 ![LQ lagrangian](figs/Lint_N.png)  
 
 
-## Event Generation
+## UFO file 
 [Download the UFO file here](composite_LQ_UFO.tgz), and untar it in your mg5\_aMC/models directory.
 
 The BSM fields and the Lagrangian used as input can be found in [composite_LQ.fr](composite_LQ.fr).
@@ -44,6 +44,10 @@ Most couplings in the Lagrangian above are set to zero, apart from the entries t
 
 In particular, the only non-zero entries are the 23 components of the *g,G* matrices, the 32 components of *tg,tG*s, as well as *gNu*<sub>2</sub> and *gNd*<sub>3</sub>. Defaults are 1 for all non-zero dimensionless couplings, 1000 GeV (or 0.001 GeV<sup>-1</sup>) for non-zero dimensionful couplings.
 
+## Event Generation
+We considered QCD pair-production of the scalars above, followed by multiple decay steps. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate **all** the branching ratios.   
+**NB** There is a bug/feature in `compute_widths` where it does not write partial widths of a colored particle if the width is less than the QCD scale, which can happen for some of the default parameters used. [See below for correcting this behavior in Madgraph]
+(#madgraph-warning:-width-of-colored-particle-lower-than-qcd-scale).
 
 ### All Tests
 All processes used in our paper are present in [composite\_LQ\_test.mg5](composite_LQ_test.mg5) and can be generated at once by running
@@ -55,9 +59,6 @@ bin/mg5_amc  composite_LQ_test.mg5
 For completeness, we also list each process below.
 
 #### Leptoquark production and decay
-The simplest process is leptoquark pair-production, followed by decays. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate **all** the branching ratios.   
-**NB** There's a bug/feature in `compute_widths` where it does not write partial widths of a colored particle if the width is less than the QCD scale, which can happen for some of the default parameters used. [See below for correcting this behavior in Madgraph]
-(#madgraph-warning:-"width-of-colored-particle-lower-than-qcd-scale")
 
 <img align="right" src="figs/diagram_s1_ccctau.png" width=200>
 The following will produce the leptoquark $S_1$, and prepare the decay chain with c-tau, as depicted.
@@ -168,8 +169,6 @@ launch lq_octoct
 ```
 
 That's it!
-
-# link it
 
 ###  Madgraph warning: "width of colored particle lower than QCD scale"
 When Madgraph (in versions MG5_aMC 2.2--2.6) calculates the width of a colored particle and finds it is smaller than the QCD scale, it automatically discard that decay mode. While it is true that the correct decay should be computed between hadronized states, the decay chain is correctly captured by the undressed process, and one expects only O(1) deviations for the numerical value of the width ([see e.g. this launchpad post](https://answers.launchpad.net/mg5amcnlo/+question/257264)). 
