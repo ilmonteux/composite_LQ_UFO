@@ -55,10 +55,11 @@ bin/mg5_amc  composite_LQ_test.mg5
 For completeness, we also list each process below.
 
 #### Leptoquark production and decay
-The simplest process is leptoquark pair-production, followed by decays. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate **all** the branching ratios.
+The simplest process is leptoquark pair-production, followed by decays. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate **all** the branching ratios.   
+**NB** There's a bug/feature in `compute_widths` where it does not write partial widths of a colored particle if the width is less than the QCD scale, which can happen for some of the default parameters used. [See below for correcting this behavior in Madgraph]
+(#madgraph-warning:-"width-of-colored-particle-lower-than-qcd-scale")
 
-
-<img align="right" src="figs/lq_decay.png" width=200>
+<img align="right" src="figs/diagram_s1_ccctau.png" width=200>
 The following will produce the leptoquark $S_1$, and prepare the decay chain with c-tau, as depicted.
 
 
@@ -77,7 +78,7 @@ launch
 
 ```
 
-<img align="right" src="figs/lq_decay.png" width=200>
+<img align="right" src="figs/diagram_ts1_bbbmu.png" width=200>
 The following will produce the leptoquark $\tilde{S}_1$ and prepare the decay chain with b-mu, as depicted.
 
 ```
@@ -95,8 +96,8 @@ launch
 ```
 
 #### Sextet production
-<img align="right" src="figs/lq_decay.png" width=200>
-The color sextet scalar can be pair-produced and then decay to two leptoquarks each, followed by the same decay chain as in the previous examples.
+<img align="right" src="figs/diagram_six_ccctau.png" width=200> 
+The color sextet scalar can be pair-produced and then decay to two leptoquarks each, followed by the same decay chain as in the previous examples. 
 
 ```
 import model composite_LQ_UFO
@@ -112,7 +113,7 @@ launch
  compute_widths nn
  done
 ```
-<img align="right" src="figs/lq_decay.png" width=200>
+<img align="right" src="figs/diagram_tsix_bbbmu.png" width=200>
 
 ```
 import model composite_LQ_UFO
@@ -131,7 +132,7 @@ launch
 ```
 
 #### Octet production
-<img align="right" src="figs/lq_decay.png" width=200>
+<img align="right" src="figs/diagram_oct_ccctau.png" width=200> 
 Finally we pair-produce the octet, each of which will decay to a quark, a lepton and a leptoquark. The two runs below will generate events with c-tau and b-mu final states.
 
 ```
@@ -149,8 +150,11 @@ launch
  compute_widths s1b
  compute_widths nn
  done
+```
+<img align="right" src="figs/diagram_oct_bbbmu.png" width=200>
 
-launch
+```
+launch lq_octoct
  set nevents 100
  set GS8r2x3 0
  set GtS8r3x2 0.001
@@ -164,3 +168,37 @@ launch
 ```
 
 That's it!
+
+# link it
+
+###  Madgraph warning: "width of colored particle lower than QCD scale"
+When Madgraph (in versions MG5_aMC 2.2--2.6) calculates the width of a colored particle and finds it is smaller than the QCD scale, it automatically discard that decay mode. While it is true that the correct decay should be computed between hadronized states, the decay chain is correctly captured by the undressed process, and one expects only O(1) deviations for the numerical value of the width ([see e.g. this launchpad post](https://answers.launchpad.net/mg5amcnlo/+question/257264)). 
+
+Remembering that we are computing the widths only to fill the decay table so that pythia can use them (and we do not even care about the numerical values), we discard this warning.
+
+One should therefore comment out three blocks in `MG5_aMC_v2_XX/madgraph/interface/madgraph_interface.py`, in the function `do_compute_widths`	where the warning appears (the only three blocks where "QCD scale" appears). In MG%_AMC 2.6.1, the blocks are reported below
+
+```
+## line 8027 of madgraph_interface.py ##
+                    elif 0 < value < 0.1 and particle['color'] !=1:
+                        logger.warning("partial width of particle %s lower than QCD scale:%s. Set it to zero. (%s)" \
+                                   % (particle.get('name'), value, decay_to))
+                        value = 0
+
+```
+```
+## line 8097 of madgraph_interface.py ##
+            if particle['color'] !=1 and 0 < width.real < 0.1:
+                logger.warning("width of colored particle \"%s(%s)\" lower than QCD scale: %s. Set width to zero "
+                               % (particle.get('name'), pid, width.real))
+                width = 0
+```
+```
+## line 8110 of madgraph_interface.py ##
+                if 0 < BR.value * width <0.1 and particle['color'] !=1:
+                    logger.warning("partial width of particle %s lower than QCD scale:%s. Set it to zero. (%s)" \
+                                   % (particle.get('name'), BR.value * width, BR.lhacode[1:]))
+                                     
+                    continue
+
+```
