@@ -30,8 +30,8 @@ Finally, the singlet has an effective coupling to quarks and leptons
 
 We have translated the lagrangians in FeynRules to generate a UFO file, keeping the names and symbols of parameters as close as possible to the nomenclature above. (parameters with a \~ have a `t` in front of their names, e.g. $\tilde{S}\_1$->`tS1`, $\tilde G$->`tG`).
 
-| field | ![](figs/s1.png) | ![](figs/ts1.png) | ![](figs/nn.png) | ![](figs/phi6.png) | ![](figs/tphi6.png) | ![](figs/phi8.png)
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| field | ![](figs/s1.png) | ![](figs/ts1.png) | ![](figs/nn.png) | ![](figs/phi6.png) | ![](figs/tphi6.png) | ![](figs/phi8.png)|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | quantum numbers | (**3**,**1**,-1/3) | (**3**,**1**,4/3) | (**1**,**1**,0) | (**6**,**1**,-2/3) | (**3**,**1**,-8/3) | (**8**,**1**,0)
 | mg5 name| S1b | tS1b | nn | six | tsix | oct
 | PID | 9000010 | 9000011| 9000050 | 9000060 | 9000061 | 9000080 |
