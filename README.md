@@ -10,7 +10,7 @@ In this model we introduce composite scalar leptoquarks $S\_1$ and $\tilde{S}\_1
 
 ![LQ lagrangian](figs/Lint_std.png)  
 
-to which we add interactions involving the neutral scalar (here and below, all the *G*'s have dimensions of mass<sup>-1</sup>)
+to which we add interactions involving the neutral scalar (here and below, all the *G*'s have dimensions of mass<sup>-1</sup>) 
 
 ![LQ lagrangian](figs/Lint_LQ_N.png)  
 
@@ -18,14 +18,14 @@ and interactions of the sextet and octet
 
 ![LQ lagrangian](figs/Lint_68.png)
 
-Finally, the singlet has an effective coupling to quarks and leptons  
+Finally, the singlet has an effective coupling to quarks and leptons   
 ![LQ lagrangian](figs/Lint_N.png)  
 
 
 ## UFO file 
 [Download the UFO file here](composite_LQ_UFO.tgz), and untar it in your mg5\_aMC/models directory.
 
-The BSM fields and the Lagrangian used as input can be found in [composite_LQ.fr](composite_LQ.fr).
+The BSM fields and the Lagrangian are defined in the FeynRules input [composite_LQ.fr](composite_LQ.fr).
 
 
 ##### Definitions and defaults
@@ -42,10 +42,10 @@ By default the leptoquarks are at 600 GeV, the sextet and octet at 1500 GeV, and
 
 Most couplings in the Lagrangian above are set to zero, apart from the entries that allow decays with c,tau or b,mu (which were the final states we were interested in the paper). For simplicity the defaults have all LH couplings set to zero and only turned on the RH couplings.
 
-In particular, the only non-zero entries are the 23 components of the *g,G* matrices, the 32 components of *tg,tG*s, as well as *gNu*<sub>2</sub> and *gNd*<sub>3</sub>. Defaults are 1 for all non-zero dimensionless couplings, 1000 GeV (or 0.001 GeV<sup>-1</sup>) for non-zero dimensionful couplings.
+In particular, the only non-zero entries are the 23 components of the *g,G* matrices, the 32 components of *tg,tG*s, as well as *gNu*<sub>2</sub> and *gNd*<sub>3</sub>. Defaults are 1 for all non-zero dimensionless couplings, and 10<sup>3</sup> GeV (or 10<sup>-3</sup> GeV<sup>-1</sup>) for non-zero dimensionful couplings.
 
 ## Event Generation
-We considered QCD pair-production of the scalars above, followed by multiple decay steps. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate **all** the branching ratios.   
+We considered QCD pair-production of the scalars above, followed by multiple decay steps. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate the branching ratios.   
 **NB** There is a bug/feature in `compute_widths` where it does not write partial widths of a colored particle if the width is less than the QCD scale, which can happen for some of the default parameters used. [See below for correcting this behavior in Madgraph]
 (#madgraph-warning:-width-of-colored-particle-lower-than-qcd-scale).
 
@@ -171,11 +171,11 @@ launch lq_octoct
 That's it!
 
 ###  Madgraph warning: "width of colored particle lower than QCD scale"
-When Madgraph (in versions MG5_aMC 2.2--2.6) calculates the width of a colored particle and finds it is smaller than the QCD scale, it automatically discard that decay mode. While it is true that the correct decay should be computed between hadronized states, the decay chain is correctly captured by the undressed process, and one expects only O(1) deviations for the numerical value of the width ([see e.g. this launchpad post](https://answers.launchpad.net/mg5amcnlo/+question/257264)). 
+When Madgraph (in versions MG5_aMC 2.2--2.6+) calculates the width of a colored particle and finds it is smaller than the QCD scale, it automatically discard that decay mode. While it is true that the correct decay should be computed between hadronized states, the decay chain is correctly captured by the undressed process, and one expects only O(1) deviations for the numerical value of the width ([see e.g. this launchpad post](https://answers.launchpad.net/mg5amcnlo/+question/257264)). 
 
 Remembering that we are computing the widths only to fill the decay table so that pythia can use them (and we do not even care about the numerical values), we discard this warning.
 
-One should therefore comment out three blocks in `MG5_aMC_v2_XX/madgraph/interface/madgraph_interface.py`, in the function `do_compute_widths`	where the warning appears (the only three blocks where "QCD scale" appears). In MG%_AMC 2.6.1, the blocks are reported below
+One should therefore comment out three blocks in `MG5_aMC_v2_XX/madgraph/interface/madgraph_interface.py`, in the function `do_compute_widths`	where the warning appears (the only three blocks where "QCD scale" appears). For MG5_AMC 2.6.1, the blocks to be commented out are copied below
 
 ```
 ## line 8027 of madgraph_interface.py ##
@@ -183,7 +183,6 @@ One should therefore comment out three blocks in `MG5_aMC_v2_XX/madgraph/interfa
                         logger.warning("partial width of particle %s lower than QCD scale:%s. Set it to zero. (%s)" \
                                    % (particle.get('name'), value, decay_to))
                         value = 0
-
 ```
 ```
 ## line 8097 of madgraph_interface.py ##
@@ -199,5 +198,4 @@ One should therefore comment out three blocks in `MG5_aMC_v2_XX/madgraph/interfa
                                    % (particle.get('name'), BR.value * width, BR.lhacode[1:]))
                                      
                     continue
-
 ```
