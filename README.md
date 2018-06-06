@@ -30,7 +30,7 @@ The BSM fields and the Lagrangian are defined in the FeynRules input [composite_
 
 ##### Definitions and defaults
 
-We have translated the lagrangians in FeynRules to generate a UFO file, keeping the names and symbols of parameters as close as possible to the nomenclature above. (parameters with a \~ have a `t` in front of their names, e.g. $\tilde{S}\_1$->`tS1`, $\tilde G$->`tG`).
+We have translated the lagrangians in FeynRules to generate a UFO file, keeping the names and symbols of parameters as close as possible to the nomenclature above (parameters with a \~ have a `t` in front of their names, e.g. $\tilde{S}\_1$->`tS1`, $\tilde G$->`tG`).
 
 | field | ![](figs/s1.png) | ![](figs/ts1.png) | ![](figs/nn.png) | ![](figs/phi6.png) | ![](figs/tphi6.png) | ![](figs/phi8.png)|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
