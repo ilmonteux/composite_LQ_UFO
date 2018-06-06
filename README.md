@@ -46,8 +46,10 @@ In particular, the only non-zero entries are the 23 components of the *g,G* matr
 
 ## Event Generation
 We considered QCD pair-production of the scalars above, followed by multiple decay steps. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate the branching ratios.   
-**NB** There is a bug/feature in `compute_widths` where it does not write partial widths of a colored particle if the width is less than the QCD scale, which can happen for some of the default parameters used. [See below for correcting this behavior in Madgraph]
-(#madgraph-warning-width-of-colored-particle-lower-than-qcd-scale).
+**NB** There is a bug/feature in `compute_widths` where it does not write partial widths of a colored particle if the width is less than the QCD scale, which can happen for some of the default parameters used. 
+
+[See below for correcting this behavior in Madgraph]
+(#madgraph-warning-width-of-colored-particle-lower-than-qcd-scale)
 
 ### All Tests
 All processes used in our paper are present in [composite\_LQ\_test.mg5](composite_LQ_test.mg5) and can be generated at once by running
