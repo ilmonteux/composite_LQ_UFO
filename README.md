@@ -112,6 +112,7 @@ launch
  compute_widths nn
  done
 ```
+<img align="right" src="figs/lq_decay.png" width=200>
 
 ```
 import model composite_LQ_UFO
