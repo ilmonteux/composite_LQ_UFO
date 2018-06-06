@@ -56,7 +56,7 @@ For completeness, we also list each process below.
 The simplest process is leptoquark pair-production, followed by decays. One can either write the whole process in Madgraph, or only produce the leptoquarks and let Pythia handle the decays (the latter is considerably faster, especially with the many final states present). For Pythia to know how to decay the new particles, we use `compute_widths` in Madgraph to calculate **all** the branching ratios.
 
 
-<img align="right" src="figs/lq_decay.png" width=150>
+<img align="right" src="figs/lq_decay.png" width=200>
 The following will produce the leptoquark $S_1$, and prepare the decay chain with c-tau, as depicted.
 
 
@@ -75,7 +75,7 @@ launch
 
 ```
 
-<img align="right" src="figs/lq_decay.png" width=150>
+<img align="right" src="figs/lq_decay.png" width=200>
 The following will produce the leptoquark $\tilde{S}_1$ and prepare the decay chain with b-mu, as depicted.
 
 ```
@@ -92,27 +92,8 @@ launch
  done
 ```
 
-<div style="-webkit-column-count: 2; -moz-column-count: 2; column-count: 2;">
-    <div style="display: inline-block;">
-        <pre><code>import model composite_LQ_UFO
-generate p p > ts1b ts1b~
-output lqlq_bbbmu
-launch
- set nevents 100
- set gt1r3x2 0
- set gnnu2 0
- set gnnd3 1
- compute_widths ts1b
- compute_widths nn
- done</code></pre>
-    </div>
-    <div style="display: inline-block; margin-left: 0px;margin-top: 50px;">
-<img align="right" src="figs/lq_decay.png" width=150>
-    </div>
-</div>
-
 #### Sextet production
-<img align="right" src="figs/lq_decay.png" width=150>
+<img align="right" src="figs/lq_decay.png" width=200>
 The color sextet scalar can be pair-produced and then decay to two leptoquarks each, followed by the same decay chain as in the previous examples.
 
 ```
@@ -147,7 +128,7 @@ launch
 ```
 
 #### Octet production
-<img align="right" src="figs/lq_decay.png" width=150>
+<img align="right" src="figs/lq_decay.png" width=200>
 Finally we pair-produce the octet, each of which will decay to a quark, a lepton and a leptoquark. The two runs below will generate events with c-tau and b-mu final states.
 
 ```
@@ -179,5 +160,4 @@ launch
  done
 ```
 
-
-# Thanks
+That's it!
