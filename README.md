@@ -1,13 +1,12 @@
 # Composite LeptoQuark UFO model files
 This is a repository for the leptoquark model explored in [arXiv:1803.05962](http://arxiv.org/abs/arXiv:1803.05962) by A.Monteux and A.Rajaraman. Please cite the paper if you use this UFO or find this useful.
 
-The UFO file was generated with [FeynRules](http://feynrules.irmp.ucl.ac.be/). The BSM fields and the Lagrangian used as input can be found in [composite_LQ.fr](composite_LQ.fr).
-
+The UFO file was generated with [FeynRules](http://feynrules.irmp.ucl.ac.be/).
 
 Examples on how to generate events with Madgraph are provided below.
 
 ## The model
-In this model we introduce composite scalar leptoquarks $S\_1$ and $\tilde{S}\_1$ (in the notation of [Buchmüller, Ruckl, Wyler](http://inspirehep.net/record/235471)), as well as a scalar singlet $N$ and composite scalar color-sextets and octets. The standard leptoquark interaction Lagrangian is
+In this model we introduce composite scalar leptoquarks $S\_1$ and $\tilde{S}\_1$ (in the notation of [Buchmüller, Ruckl, Wyler](http://inspirehep.net/record/235471)), as well as a scalar singlet $N$ and composite scalar color-sextets and octets. The standard leptoquark interaction Lagrangian is
 
 ![LQ lagrangian](figs/Lint_std.png)  
 
@@ -26,13 +25,16 @@ Finally, the singlet has an effective coupling to quarks and leptons
 ## Event Generation
 [Download the UFO file here](composite_LQ_UFO.tgz), and untar it in your mg5\_aMC/models directory.
 
+The BSM fields and the Lagrangian used as input can be found in [composite_LQ.fr](composite_LQ.fr).
+
+
 ##### Definitions and defaults
 
 We have translated the lagrangians in FeynRules to generate a UFO file, keeping the names and symbols of parameters as close as possible to the nomenclature above. (parameters with a \~ have a `t` in front of their names, e.g. $\tilde{S}\_1$->`tS1`, $\tilde G$->`tG`).
 
 | field | ![](figs/s1.png) | ![](figs/ts1.png) | ![](figs/nn.png) | ![](figs/phi6.png) | ![](figs/tphi6.png) | ![](figs/phi8.png)|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| quantum numbers | (**3**,**1**,-1/3) | (**3**,**1**,4/3) | (**1**,**1**,0) | (**6**,**1**,-2/3) | (**3**,**1**,-8/3) | (**8**,**1**,0)
+| quantum numbers | (**3**,**1**,-1/3) | (**3**,**1**,-4/3) | (**1**,**1**,0) | (**6**,**1**,-2/3) | (**3**,**1**,-8/3) | (**8**,**1**,0)
 | mg5 name| S1b | tS1b | nn | six | tsix | oct
 | PID | 9000010 | 9000011| 9000050 | 9000060 | 9000061 | 9000080 |
 
