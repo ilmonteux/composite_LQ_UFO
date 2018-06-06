@@ -172,8 +172,8 @@ launch lq_octoct
 
 That's it!
 
-###  Madgraph warning: "width of colored particle lower than QCD scale"
-When Madgraph (in versions MG5_aMC 2.2--2.6+) calculates the width of a colored particle and finds it is smaller than the QCD scale, it automatically discard that decay mode. While it is true that the correct decay should be computed between hadronized states, the decay chain is correctly captured by the undressed process, and one expects only O(1) deviations for the numerical value of the width ([see e.g. this launchpad post](https://answers.launchpad.net/mg5amcnlo/+question/257264)). 
+### Madgraph warning
+When Madgraph (in versions MG5_aMC 2.2--2.6+) calculates the width of a colored particle and finds it is smaller than the QCD scale, it automatically discard that decay mode (with a warning: "width of colored particle lower than QCD scale"). While it is true that the correct decay should be computed between hadronized states, the decay chain is correctly captured by the undressed process, and one expects only O(1) deviations for the numerical value of the width ([see e.g. this launchpad post](https://answers.launchpad.net/mg5amcnlo/+question/257264)). 
 
 Remembering that we are computing the widths only to fill the decay table so that pythia can use them (and we do not even care about the numerical values), we discard this warning.
 
